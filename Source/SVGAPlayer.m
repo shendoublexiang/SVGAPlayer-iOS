@@ -256,7 +256,7 @@
     [self.videoItem.audios enumerateObjectsUsingBlock:^(SVGAAudioEntity * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         SVGAAudioLayer *audioLayer = [[SVGAAudioLayer alloc] initWithAudioItem:obj videoItem:self.videoItem];
         if (self.isMuted == YES) {
-            audioLayer.audioLayer.volume = 0.0;
+            audioLayer.audioPlayer.volume = 0.0;
         }
         [audioLayers addObject:audioLayer];
     }];
