@@ -31,8 +31,9 @@
 @property (nonatomic, assign) NSRange currentRange;
 @property (nonatomic, assign) BOOL forwardAnimating;
 @property (nonatomic, assign) BOOL reversing;
+@property (nonatomic, assign) BOOL isMuted;
 
-@end 
+@end
 
 @implementation SVGAPlayer
 
@@ -118,6 +119,10 @@
 
 - (void)pauseAnimation {
     [self stopAnimation:NO];
+}
+
+- (void)muteAudio {
+    self.isMuted = YES;
 }
 
 - (void)stopAnimation {
@@ -250,6 +255,9 @@
     NSMutableArray *audioLayers = [NSMutableArray array];
     [self.videoItem.audios enumerateObjectsUsingBlock:^(SVGAAudioEntity * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         SVGAAudioLayer *audioLayer = [[SVGAAudioLayer alloc] initWithAudioItem:obj videoItem:self.videoItem];
+        if (self.isMuted == YES) {
+            audioLayer.audioLayer.volume = 0.0;
+        }
         [audioLayers addObject:audioLayer];
     }];
     self.audioLayers = audioLayers;
